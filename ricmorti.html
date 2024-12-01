@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Rick and Morty Karakter Bilgileri</title>
+
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: bisque;
+        }
+
+        input {
+
+            display: block;
+            margin: 20px;
+            padding: 10px;
+            width: 200px;
+            border: 2px solid gray;
+        }
+
+        .container {
+            padding: 10px;
+            display: block;
+            justify-content: center;
+            align-items: center;
+            margin: 5px;
+            background-color: teal;
+        }
+
+        #img {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            margin-left: 10px;
+            width: 300px;
+            /* Genişliği artırıldı */
+            height: 300px;
+            /* Yüksekliği artırıldı */
+            border: 2px solid black;
+        }
+    </style>
+    <script>
+
+        function verilerigetir() {
+            //DEGISKENLERI ALALIM INPUTLARIN
+            var getNumber = Number(document.getElementById("idresim").value);
+            var nameInput = document.getElementById("name");
+            var statusInput = document.getElementById("status");
+            var speciesInput = document.getElementById("species");
+            var genderInput = document.getElementById("gender");
+            var img = document.getElementById("img");
+
+
+            //FETCH SORGUSU ATALIM
+            fetch("https://rickandmortyapi.com/api/character/" + getNumber)  // API URL'si ve karakter ID'si ile istek yapıyoruz
+                .then(Response => Response.json())  // API'den gelen yanıtı JSON formatına dönüştürüyoruz
+                .then(data => {
+                    // JSON verisini kullanarak HTML öğelerine veriyi aktarıyoruz
+                    img.src = data.image;               // Karakterin resmini 'img' elementine ekliyoruz
+                    nameInput.value = data.name;         // Karakterin adını 'name' input'una yazıyoruz
+                    statusInput.value = data.status;     // Durum bilgisini 'status' input'una yazıyoruz
+                    speciesInput.value = data.species;   // Tür bilgisini 'species' input'una yazıyoruz
+                    genderInput.value = data.gender;     // Cinsiyet bilgisini 'gender' input'una yazıyoruz
+                });
+        };
+
+
+    </script>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <input onclick="verilerigetir()" type="button" value="Resimleri Getir" id="getresim">
+        <input type="number" placeholder="KarakterIdsi Girin" id="idresim">
+        <input type="text" id="name" placeholder="name">
+        <input type="text" id="status" placeholder="status">
+        <input type="text" id="species" placeholder="species">
+        <input type="text" id="gender" placeholder="gender">
+
+    </div>
+    <img id="img" alt="Karakter Resmi">
+
+</body>
+
+</html>
